@@ -45,17 +45,20 @@ namespace StudentsGradeBook.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(CreateUserViewModel model)
+        public async Task<IActionResult> CreateUser(AddNewUserViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var defaultGroupId = 1;
                 var user = new User
                 {
+                    Id = Guid.NewGuid().ToString(),
                     UserName = model.Email,
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Role = model.Role
+                    Role = model.Role,
+                    GroupId = defaultGroupId
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -100,5 +103,66 @@ namespace StudentsGradeBook.Controllers
 
             return View();
         }
+
+        #region Edit
+
+        public IActionResult Edit(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = _db.Users.FirstOrDefault(c => c.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new CreateUserViewModel
+            {                
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Role = user.Role,
+                GroupId = user.GroupId,
+                Groups = _db.Groups.ToList() // Get the list of groups from the database
+            };
+
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(CreateUserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _db.Users.FirstOrDefault(c => c.Email == viewModel.Email);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.FirstName = viewModel.FirstName;
+                user.LastName = viewModel.LastName;
+                user.Email = viewModel.Email;
+                user.Role = viewModel.Role;
+                user.GroupId = viewModel.GroupId;              
+
+                _db.Users.Update(user);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            // If we got this far, something failed, redisplay form
+            viewModel.Groups = _db.Groups.ToList(); // Repopulate the list of groups
+            return View(viewModel);
+        }
+
+
+
+
+        #endregion
     }
 }

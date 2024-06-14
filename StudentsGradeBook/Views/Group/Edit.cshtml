@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dodawanie zajęć</title>
+    <title>Edycja zajęć</title>
     <style>
         body {
             background-color: #f0f8ff;
@@ -96,19 +96,20 @@
 <body>
     <div class="card shadow border-0 mt-4">
         <div class="card-header">
-            <h2 class="py-2">Dodawanie grupy</h2>
+            <h2 class="py-2">Edycja grupy</h2>
         </div>
         <div class="card-body bg-light">
             <form method="post" class="row">
+                <input asp-for="GroupId" hidden />
                 <div class="border p-3">
                     <div class="form-floating py-2 col-12">
                         <input asp-for="GroupName" class="form-control border-0 shadow" />
                         <label asp-for="GroupName" class="ms-2">Nazwa grupy</label>
                         <span asp-validation-for="GroupName" class="text-danger"></span>
-                    </div>
+                    </div>                    
                     <div class="row pt-2">
                         <div class="col-6 col-md-3">
-                            <button type="submit" class="btn btn-primary form-control">Utwórz</button>
+                            <button type="submit" class="btn btn-primary form-control">Zapisz</button>
                         </div>
                         <div class="col-6 col-md-3">
                             <a asp-controller="Group" asp-action="Index" class="btn btn-outline-primary form-control">

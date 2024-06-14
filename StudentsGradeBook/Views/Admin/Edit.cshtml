@@ -1,11 +1,11 @@
-﻿@model StudentsGradeBook.Models.VM.AddNewUserViewModel
+﻿@model StudentsGradeBook.Models.VM.CreateUserViewModel
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Utwórz użytkownika</title>
+    <title>Edytuj użytkownika</title>
     <style>
         body {
             background-color: #f0f8ff;
@@ -72,10 +72,12 @@
 <body>
     <div class="card shadow border-0 mt-4">
         <div class="card-header">
-            <h2 class="py-2">Utwórz użytkownika</h2>
+            <h2 class="py-2">Edytuj użytkownika</h2>
         </div>
         <div class="card-body">
-            <form asp-action="CreateUser" method="post">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Password" />
+                <input type="hidden" asp-for="Email" />
                 <div class="form-group">
                     <label asp-for="FirstName">Imię</label>
                     <input asp-for="FirstName" class="form-control" />
@@ -87,16 +89,6 @@
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password">Hasło</label>
-                    <input asp-for="Password" type="password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="Role">Rola</label>
                     <select asp-for="Role" class="form-control">
                         <option value="Admin">Admin</option>
@@ -105,9 +97,17 @@
                     </select>
                     <span asp-validation-for="Role" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">Dodaj użytkownika
-
-                </button>
+                <div class="form-group">
+                    <label asp-for="GroupId">Nazwa grupy</label>
+                    <select asp-for="GroupId" class="form-control">
+                        @foreach (var group in Model.Groups)
+                        {
+                            <option value="@group.GroupId">@group.GroupName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="GroupId" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Zapisz</button>
             </form>
         </div>
     </div>

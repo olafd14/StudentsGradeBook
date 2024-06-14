@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentsGradeBook.Data;
 
@@ -11,9 +12,11 @@ using StudentsGradeBook.Data;
 namespace StudentsGradeBook.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614184312_AddDatabaseAdnotatnions")]
+    partial class AddDatabaseAdnotatnions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -212,7 +215,7 @@ namespace StudentsGradeBook.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
 
-                    b.Property<int?>("GroupId")
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("PassType")
@@ -378,9 +381,13 @@ namespace StudentsGradeBook.Migrations
 
             modelBuilder.Entity("StudentsGradeBook.Models.Subject", b =>
                 {
-                    b.HasOne("StudentsGradeBook.Models.Group", null)
+                    b.HasOne("StudentsGradeBook.Models.Group", "Group")
                         .WithMany("Subjects")
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("StudentsGradeBook.Models.User", b =>

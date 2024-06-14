@@ -1,66 +1,139 @@
 ﻿@model List<User>
 
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class="py-2">Użytkownicy</h2>
-            </div>
-        </div>
-    </div>  
-    <div class="col-md-12 text-end">
-        <a asp-controller="Admin" asp-action="CreateUser" class="btn btn-secondary mx-2">
-            Utwórz użytkownika
-        </a>
-    </div>
-    <div class="card-body p-4">
-        <table class="table table-bordered table-striped bg-light">
-            <thead>
-                <tr>
-                    <th>
-                        <strong>Imię</strong>
-                    </th>
-                    <th>
-                        <strong>Nazwisko</strong>
-                    </th>
-                    <th>
-                        <strong>Rola</strong>
-                    </th>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Użytkownicy</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var obj in Model.OrderBy(u => u.FirstName))
-                {
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 80%;
+            padding: 0;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .text-end {
+            text-align: right;
+            padding: 1rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .table th, .table td {
+                border: 1px solid #ddd;
+                padding: 0.75rem;
+                text-align: left;
+            }
+
+            .table th {
+                background-color: #007bff;
+                color: white;
+            }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.2rem;
+            transition: background-color 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header">
+            <h2 class="py-2">Użytkownicy</h2>
+        </div>
+        <div class="text-end">
+            <a asp-controller="Admin" asp-action="CreateUser" class="btn btn-secondary mx-2">
+                Utwórz użytkownika
+            </a>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped bg-light">
+                <thead>
                     <tr>
-                        <td>
-                            @obj.FirstName
-                        </td>
-                        <td>
-                            @obj.LastName
-                        </td>
-                        <td>
-                            @obj.Role
-                        </td>
-                        
-                        <td>
-                            <div class="col-md-12" role="group">
-                                <div class="row">
-                                    
-                                    <div class="col-md-3">
-                                        <a asp-controller="Admin" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-secondary mx-2">
-                                            Edytuj
-                                        </a>
-                                        <a asp-controller="Admin" asp-action="AddPayment" class="btn btn-secondary mx-2">
-                                            Dodaj płatność
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+                        <th><strong>Imię</strong></th>
+                        <th><strong>Nazwisko</strong></th>
+                        <th><strong>Rola</strong></th>
+                        <th><strong>Akcje</strong></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.OrderBy(u => u.FirstName))
+                    {
+                        <tr>
+                            <td>@obj.FirstName</td>
+                            <td>@obj.LastName</td>
+                            <td>@obj.Role</td>
+                            <td>
+                                <div class="actions">
+                                    <a asp-controller="Admin" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-secondary">
+                                        Edytuj
+                                    </a>
+                                    <a asp-controller="Admin" asp-action="AddPayment" asp-route-id="@obj.Id" class="btn btn-secondary">
+                                        Dodaj płatność
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+</body>
+</html>

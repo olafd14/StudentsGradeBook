@@ -69,14 +69,13 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = services.GetRequiredService<UserManager<User>>();
-    CreateRoles(roleManager, userManager).Wait();
+    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+    CreateRoles(roleManager, userManager, dbContext).Wait();
 }
 
-
-
-async Task CreateRoles(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+async Task CreateRoles(RoleManager<IdentityRole> roleManager, UserManager<User> userManager, ApplicationDbContext dbContext)
 {
-    string[] roleNames = { "Admin", "Prowadz¹cy", "Student"};
+    string[] roleNames = { "Admin", "Prowadz¹cy", "Student" };
     IdentityResult roleResult;
 
     foreach (var roleName in roleNames)
@@ -86,6 +85,16 @@ async Task CreateRoles(RoleManager<IdentityRole> roleManager, UserManager<User> 
         {
             roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
         }
+    }
+
+    // Ensure a default group exists
+    var defaultGroupName = "Default Group";
+    var defaultGroup = await dbContext.Groups.FirstOrDefaultAsync(g => g.GroupName == defaultGroupName);
+    if (defaultGroup == null)
+    {
+        defaultGroup = new Group { GroupName = defaultGroupName };
+        dbContext.Groups.Add(defaultGroup);
+        await dbContext.SaveChangesAsync();
     }
 
     var adminEmail = "admin@admin.com";
@@ -99,7 +108,8 @@ async Task CreateRoles(RoleManager<IdentityRole> roleManager, UserManager<User> 
             Email = adminEmail,
             FirstName = "Admin",
             LastName = "User",
-            Role = "Admin"
+            Role = "Admin",
+            GroupId = defaultGroup.GroupId // Assign the valid GroupId
         };
 
         string adminPassword = "Admin123!";
@@ -117,4 +127,3 @@ app.MapControllerRoute(
     pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();
-

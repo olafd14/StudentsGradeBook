@@ -7,10 +7,53 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/StudentsGradeBook.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .navbar .navbar-brand {
+                color: #007bff;
+            }
+
+            .navbar .nav-link {
+                color: #007bff;
+            }
+
+                .navbar .nav-link:hover {
+                    color: #0056b3;
+                }
+
+        .container {
+            margin-top: 2rem;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 1rem 0;
+            border-top: 1px solid #ddd;
+        }
+
+            .footer a {
+                color: #007bff;
+            }
+
+                .footer a:hover {
+                    color: #0056b3;
+                }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">StudentsGradeBook</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,7 +63,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.IsInRole("Admin") || User.IsInRole("Student") || User.IsInRole("Prowadzący"))
-                        {                            
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Subject" asp-action="Index">Przedmioty</a>
                             </li>
@@ -41,7 +84,6 @@
                                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                                 </form>
                             </li>
-
                         }
                         else
                         {

@@ -1,44 +1,136 @@
 ﻿@model Payment
 
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class="py-2">Dodawanie zajęć</h2>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dodawanie zajęć</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 80%;
+            padding: 0;
+        }
+
+        .card-header {
+            background-color: #6c757d;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-outline-primary {
+            background-color: transparent;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+        .text-danger {
+            color: red;
+        }
+
+        .border {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .shadow {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bg-light {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header">
+            <h2 class="py-2">Dodawanie rachunków</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" class="row">
+                <input type="hidden" name="userId" value="@User.Identity.Name" />
+                <div class="border p-3">
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="PaymentDate" class="form-control border-0 shadow" />
+                        <label asp-for="PaymentDate" class="ms-2">Data płatności</label>
+                        <span asp-validation-for="PaymentDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="PaymentAmount" class="form-control border-0 shadow" />
+                        <label asp-for="PaymentAmount" class="ms-2">Kwota</label>
+                        <span asp-validation-for="PaymentAmount" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="ForWhat" class="form-control border-0 shadow" />
+                        <label asp-for="ForWhat" class="ms-2">Za co:</label>
+                        <span asp-validation-for="ForWhat" class="text-danger"></span>
+                    </div>
+
+                    <div class="row pt-2">
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary form-control">Utwórz</button>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-primary form-control">
+                                Cofnij
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="card-body p-4 bg-light">
-        <form method="post" class="row">
-            <input type="hidden" name="userId" value="@User.Identity.Name"/>
-            <div class="border p-3">
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="PaymentDate" class="form-control border-0 shadow" />
-                    <label asp-for="PaymentDate" class="ms-2"></label>
-                    <span asp-validation-for="PaymentDate" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="PaymentAmount" class="form-control border-0 shadow" style="height: 150px;"></input>
-                    <label asp-for="PaymentAmount" class="ms-2"></label>
-                    <span asp-validation-for="PaymentAmount" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="ForWhat" class="form-control border-0 shadow" style="height: 150px;"></input>
-                    <label asp-for="ForWhat" class="ms-2"></label>
-                    <span asp-validation-for="ForWhat" class="text-danger"></span>
-                </div>
-                
-                <div class="row pt-2">
-                    <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-primary form-control">Utwórz</button>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-primary border form-control">
-                            Cofnij
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+</body>
+</html>

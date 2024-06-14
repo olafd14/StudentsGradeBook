@@ -1,66 +1,161 @@
 ﻿@model List<Group>
 
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class="py-2">Rozkład zajęć</h2>
-            </div>
-        </div>
-    </div>
-    <div class="card-body p-4">
-        <div class="row pb-3">
-            <div class="text-end">
-                <a asp-controller="Group" asp-action="Create" class="btn  btn-outline-dark">
-                    Dodaj grupe
-                </a>
-            </div>
-        </div>
-        <table class="table table-bordered table-striped bg-light">
-            <thead>
-                <tr>
-                    <th>
-                        Nazwa przedmiotu
-                    </th>
-                    <th>
-                        Wykładowca
-                    </th>
-                    <th>
-                        Typ zaliczenia
-                    </th>
-                    <th style="width: 200px"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rozkład zajęć</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var obj in Model.OrderBy(u => u.GroupName))
-                {
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 80%;
+            padding: 0;
+        }
+
+        .card-header {
+            background-color: #6c757d;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .table th, .table td {
+                border: 1px solid #ddd;
+                padding: 0.75rem;
+                text-align: left;
+            }
+
+            .table th {
+                background-color: #007bff;
+                color: white;
+            }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-outline-primary {
+            background-color: transparent;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+        .btn-outline-danger {
+            background-color: transparent;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+            .btn-outline-danger:hover {
+                background-color: #dc3545;
+                color: white;
+            }
+
+        .text-danger {
+            color: red;
+        }
+
+        .border {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .shadow {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bg-light {
+            background-color: #f8f9fa;
+        }
+
+        .text-end {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header">
+            <h2 class="py-2">Grupy</h2>
+        </div>
+        <div class="card-body">
+            <div class="row pb-3">
+                <div class="col text-end">
+                    <a asp-controller="Group" asp-action="Create" class="btn btn-outline-dark">
+                        Dodaj grupe
+                    </a>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped bg-light">
+                <thead>
                     <tr>
-                        <td>
-                            @obj.GroupName
-                        </td>
-                        <td>
-                            @obj.UserId
-                        </td>                       
-                        <td>
-                            <div class="row text-end" role="group">
-                                <div class="col-md-6">
-                                    <a asp-controller="Subject" asp-action="Edit" asp-route-id="@obj.GroupId" class="btn btn-outline-primary mx-2">
+                        <th>Nazwa przedmiotu</th>                        
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.OrderBy(u => u.GroupName))
+                    {
+                        <tr>
+                            <td>@obj.GroupName</td>                            
+                            <td>
+                                <div class="d-flex justify-content-between">
+                                    <a asp-controller="Group" asp-action="Edit" asp-route-id="@obj.GroupId" class="btn btn-outline-primary mx-2">
                                         Edytuj
                                     </a>
-                                </div>
-                                <div class="col-md-6">
-                                    <a asp-controller="Subject" asp-action="Delete" asp-route-id="@obj.GroupId" class="btn btn-outline-danger mx-2 delete-btn">
+                                    <a asp-controller="Group" asp-action="Delete" asp-route-id="@obj.GroupId" class="btn btn-outline-danger mx-2 delete-btn">
                                         Usuń
                                     </a>
                                 </div>
-
-
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+</body>
+</html>

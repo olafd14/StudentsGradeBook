@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentsGradeBook.Models.VM
 {
-    public class CreateUserViewModel
-    {
-        
+    public class AddNewUserViewModel
+    {        
         [Required]
         public string FirstName { get; set; }
 
@@ -18,14 +16,13 @@ namespace StudentsGradeBook.Models.VM
         public string Email { get; set; }
 
         [ValidateNever]
-        public string Password { get; set; } 
+        public string Password { get; set; }
 
         [Required]
         public string Role { get; set; }
-        [ValidateNever]
+        [Required]
         public int GroupId { get; set; }
 
-        [ValidateNever]
-        public IEnumerable<Group> Groups { get; set; }
+
     }
 }

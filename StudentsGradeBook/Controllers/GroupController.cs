@@ -48,5 +48,63 @@ namespace StudentsGradeBook.Controllers
         }
 
         #endregion
+        #region Edit
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Group group = _db.Groups.FirstOrDefault(c => c.GroupId == id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+            return View(group);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Group obj)
+        {
+
+
+
+            if (ModelState.IsValid)
+            {
+                _db.Groups.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        #endregion
+
+        #region Delete
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Group group = _db.Groups.FirstOrDefault(c => c.GroupId == id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+
+            else
+            {
+                _db.Groups.Remove(group);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
+
+        #endregion
     }
 }

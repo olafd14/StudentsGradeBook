@@ -9,11 +9,11 @@ namespace StudentsGradeBook.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Role { get; set; }
-        public string GroupId { get; set; }
+        
+        public int GroupId { get; set; }
+
         [ForeignKey("GroupId")]
         [ValidateNever]
-        [NotMapped]
         public Group Group { get; set; }
-
     }
 }
