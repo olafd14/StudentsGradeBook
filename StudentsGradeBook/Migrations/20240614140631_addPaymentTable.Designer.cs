@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentsGradeBook.Data;
 
@@ -11,9 +12,11 @@ using StudentsGradeBook.Data;
 namespace StudentsGradeBook.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614140631_addPaymentTable")]
+    partial class addPaymentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,27 +158,6 @@ namespace StudentsGradeBook.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("StudentsGradeBook.Models.Group", b =>
-                {
-                    b.Property<int>("GroupId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"));
-
-                    b.Property<string>("GroupName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("GroupId");
-
-                    b.ToTable("Groups");
-                });
-
             modelBuilder.Entity("StudentsGradeBook.Models.Payment", b =>
                 {
                     b.Property<int>("PaymentId")
@@ -208,6 +190,27 @@ namespace StudentsGradeBook.Migrations
                     b.ToTable("Payments");
                 });
 
+            modelBuilder.Entity("StudentsGradeBook.Models.Student", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StudentId");
+
+                    b.ToTable("Students");
+                });
+
             modelBuilder.Entity("StudentsGradeBook.Models.Subject", b =>
                 {
                     b.Property<int>("SubjectId")
@@ -215,13 +218,6 @@ namespace StudentsGradeBook.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
-
-                    b.Property<string>("GroupId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GroupId1")
-                        .HasColumnType("int");
 
                     b.Property<string>("PassType")
                         .IsRequired()
@@ -236,8 +232,6 @@ namespace StudentsGradeBook.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SubjectId");
-
-                    b.HasIndex("GroupId1");
 
                     b.ToTable("Subjects");
                 });
@@ -264,13 +258,6 @@ namespace StudentsGradeBook.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GroupId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GroupId1")
-                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -314,8 +301,6 @@ namespace StudentsGradeBook.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupId1");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -386,27 +371,6 @@ namespace StudentsGradeBook.Migrations
                         .HasForeignKey("Id");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("StudentsGradeBook.Models.Subject", b =>
-                {
-                    b.HasOne("StudentsGradeBook.Models.Group", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("GroupId1");
-                });
-
-            modelBuilder.Entity("StudentsGradeBook.Models.User", b =>
-                {
-                    b.HasOne("StudentsGradeBook.Models.Group", null)
-                        .WithMany("Users")
-                        .HasForeignKey("GroupId1");
-                });
-
-            modelBuilder.Entity("StudentsGradeBook.Models.Group", b =>
-                {
-                    b.Navigation("Subjects");
-
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

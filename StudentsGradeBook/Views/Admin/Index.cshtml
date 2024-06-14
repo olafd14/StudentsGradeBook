@@ -1,0 +1,66 @@
+﻿@model List<User>
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="coll-12 text-center">
+                <h2 class="py-2">Użytkownicy</h2>
+            </div>
+        </div>
+    </div>  
+    <div class="col-md-12 text-end">
+        <a asp-controller="Admin" asp-action="CreateUser" class="btn btn-secondary mx-2">
+            Utwórz użytkownika
+        </a>
+    </div>
+    <div class="card-body p-4">
+        <table class="table table-bordered table-striped bg-light">
+            <thead>
+                <tr>
+                    <th>
+                        <strong>Imię</strong>
+                    </th>
+                    <th>
+                        <strong>Nazwisko</strong>
+                    </th>
+                    <th>
+                        <strong>Rola</strong>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model.OrderBy(u => u.FirstName))
+                {
+                    <tr>
+                        <td>
+                            @obj.FirstName
+                        </td>
+                        <td>
+                            @obj.LastName
+                        </td>
+                        <td>
+                            @obj.Role
+                        </td>
+                        
+                        <td>
+                            <div class="col-md-12" role="group">
+                                <div class="row">
+                                    
+                                    <div class="col-md-3">
+                                        <a asp-controller="Admin" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-secondary mx-2">
+                                            Edytuj
+                                        </a>
+                                        <a asp-controller="Admin" asp-action="AddPayment" class="btn btn-secondary mx-2">
+                                            Dodaj płatność
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

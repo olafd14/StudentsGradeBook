@@ -1,0 +1,45 @@
+﻿@model Subject
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="coll-12 text-center">
+                <h2 class="py-2">Dodawanie zajęć</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4 bg-light">
+        <form method="post" class="row">
+            <div class="border p-3">                
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="SubjectName" class="form-control border-0 shadow" />
+                    <label asp-for="SubjectName" class="ms-2"></label>
+                    <span asp-validation-for="SubjectName" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Teacher" class="form-control border-0 shadow" style="height: 150px;"></input>
+                    <label asp-for="Teacher" class="ms-2"></label>
+                    <span asp-validation-for="Teacher" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <select asp-for="PassType" class="form-control">
+                        <option value="Zaliczenie na ocenę">Zaliczenie na ocenę</option>
+                        <option value="Egzamin">Egzamin</option>
+                    </select>
+                    <label asp-for="PassType" class="ms-2"></label>
+                    <span asp-validation-for="PassType" class="text-danger"></span>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Utwórz</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary border form-control">
+                            Cofnij
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

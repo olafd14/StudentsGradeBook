@@ -41,7 +41,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.Migrate();
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -72,7 +76,7 @@ using (var scope = app.Services.CreateScope())
 
 async Task CreateRoles(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
 {
-    string[] roleNames = { "Admin", "Prowadz¹cy" };
+    string[] roleNames = { "Admin", "Prowadz¹cy", "Student"};
     IdentityResult roleResult;
 
     foreach (var roleName in roleNames)

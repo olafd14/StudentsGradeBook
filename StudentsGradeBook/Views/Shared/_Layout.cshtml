@@ -19,16 +19,19 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (User.IsInRole("Admin") || User.IsInRole("Prowadzący"))
-                        {
+                        @if (User.IsInRole("Admin") || User.IsInRole("Student") || User.IsInRole("Prowadzący"))
+                        {                            
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Subject" asp-action="Index">Przedmioty</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Group" asp-action="Index">Grupy</a>
                             </li>
                         }
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateUser">Utwórz użytkownika</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Zarządzaj użytkownikami</a>
                             </li>
                         }
                         @if (User.Identity.IsAuthenticated)
@@ -38,6 +41,7 @@
                                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                                 </form>
                             </li>
+
                         }
                         else
                         {
